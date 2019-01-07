@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteY="81dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    >
+
+
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:text="Titolo"
+        app:layout_constraintLeft_toRightOf="@id/book_photo"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:padding="2dp"
+        android:text="Stefano Benni"
+        app:layout_constraintLeft_toRightOf="@id/book_photo"
+        tools:layout_editor_absoluteY="25dp" />
+
+    <TextView
+        android:id="@+id/book_published"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:text="2019"
+        app:layout_constraintLeft_toRightOf="@id/book_category"
+        tools:layout_editor_absoluteY="47dp" />
+
+    <TextView
+        android:id="@+id/book_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:text="Figaggine"
+        app:layout_constraintLeft_toRightOf="@id/book_photo"
+        tools:layout_editor_absoluteY="47dp" />
+
+    <ImageView
+        android:id="@+id/book_photo"
+        android:layout_width="104dp"
+        android:layout_height="70dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:srcCompat="@tools:sample/avatars[3]" />
+
+</android.support.constraint.ConstraintLayout>
