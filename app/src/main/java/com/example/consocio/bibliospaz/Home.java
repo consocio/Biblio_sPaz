@@ -126,6 +126,9 @@ public class Home extends AppCompatActivity
                 name += infoResponse.getName() + " ";
                 name += infoResponse.getSurname();
                 email += infoResponse.getEmail();
+
+                userMail.setText(email);
+                userName.setText(name);
             }
 
             @Override
@@ -133,7 +136,5 @@ public class Home extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        userMail.setText(email);
-        userName.setText(name);
     }
 }

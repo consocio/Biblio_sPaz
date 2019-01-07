@@ -31,7 +31,7 @@ public class Login {
         return password;
     }
 
-    public String getAccess_token() {
+    public String getAccessToken() {
         return access_token;
     }
 
