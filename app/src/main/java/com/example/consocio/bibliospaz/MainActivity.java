@@ -1,5 +1,6 @@
 package com.example.consocio.bibliospaz;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.consocio.bibliospaz.Utils.Login;
+import com.example.consocio.bibliospaz.Models.Login;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import retrofit2.Call;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     private String token;
     private static final BibliospazApi bibliospazApi = new ApiService().init();
-
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +36,13 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Login();
-                if (!(token == null)) {
-                    startActivity(new Intent(MainActivity.this, Home.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), "LOGIN ERROR", Toast.LENGTH_LONG).show();
-                }
+                MainActivity.this.login();
             }
         });
     }
 
-    public void Login() {
+    private void login() {
+        showProgress();
         String email;
         String pwd;
 
@@ -62,33 +59,36 @@ public class MainActivity extends AppCompatActivity {
 
                 Login loginResponse = response.body();
 
-                if (!(loginResponse.getSuccess() == "false")) {
-                    String content = "";
-                    content += "Code: " + response.code() + "\n";
-                    content += "Access Token = " + loginResponse.getAccess_token() + "\n";
-                    content += "Expires = " + loginResponse.getExpires_in() + "\n";
-                    content += "Name = " + loginResponse.getName() + "\n";
-                    content += "Surname = " + loginResponse.getSurname() + "\n" + "\n";
-
-
-                    token += loginResponse.getAccess_token();
+                if (loginResponse != null && loginResponse.getSuccess()) {
+                    token = loginResponse.getAccessToken();
                     Prefs.putString("token", token);
                     Log.d("prova", "prefs " + Prefs.getString("token", null));
 
-
+                    startActivity(new Intent(MainActivity.this, Home.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_LONG).show();
                 }
-
-
+                stopProgress();
             }
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                stopProgress();
             }
         });
+    }
 
+    private void showProgress(){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Attendi...");
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
 
+    private void stopProgress(){
+        if(progressDialog != null && progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }

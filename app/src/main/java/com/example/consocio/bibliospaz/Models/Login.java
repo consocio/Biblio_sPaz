@@ -1,6 +1,4 @@
-package com.example.consocio.bibliospaz.Utils;
-
-import retrofit2.http.POST;
+package com.example.consocio.bibliospaz.Models;
 
 public class Login {
     private String email;
@@ -9,7 +7,7 @@ public class Login {
     private Integer expires_in;
     private String name;
     private String surname;
-    private String success;
+    private Boolean success;
     private String msg;
 
     public Login(String email, String password) {
@@ -17,7 +15,7 @@ public class Login {
         this.password = password;
     }
 
-    public String getSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
@@ -33,7 +31,7 @@ public class Login {
         return password;
     }
 
-    public String getAccess_token() {
+    public String getAccessToken() {
         return access_token;
     }
 

@@ -16,8 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.consocio.bibliospaz.Utils.Login;
-import com.example.consocio.bibliospaz.Utils.Me;
+import com.example.consocio.bibliospaz.Models.Me;
 import com.google.gson.Gson;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -33,7 +32,6 @@ public class Home extends AppCompatActivity
     private String name = "";
     private String email = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +40,8 @@ public class Home extends AppCompatActivity
         setSupportActionBar(toolbar);
         userMail = findViewById(R.id.user_Mail);
         userName = findViewById(R.id.user_Name);
-
-
         token = "Bearer ";
         token += Prefs.getString("token",null);
-        Log.d("prova", token);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,44 +79,30 @@ public class Home extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-
-
         int id = item.getItemId();
-
-        if (id == R.id.barcode_scan) {
-            // Handle the camera action
-        } else if (id == R.id.elencoLibri) {
-
-        } else if (id == R.id.addBook) {
-
-        } else if (id == R.id.settings) {
-
+        switch (id){
+            case R.id.barcode_scan:
+                break;
+            case R.id.elencoLibri:
+                break;
+            case R.id.addBook:
+                break;
+            case R.id.settings:
+                break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -140,7 +120,6 @@ public class Home extends AppCompatActivity
                 }
 
                 Me infoResponse = response.body();
-                String luciano = "";
 
                 Log.d("prova", "response " + new Gson().toJson(response.body()) + " code " + response.code());
 
@@ -148,15 +127,14 @@ public class Home extends AppCompatActivity
                 name += infoResponse.getSurname();
                 email += infoResponse.getEmail();
 
+                userMail.setText(email);
+                userName.setText(name);
             }
 
             @Override
             public void onFailure(Call<Me> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
-        userMail.setText(email);
-        userName.setText(name);
     }
 }

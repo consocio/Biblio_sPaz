@@ -16,7 +16,6 @@ public class Bootstrapper extends Application {
                 .setPrefsName(getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
-
     }
 
 }
