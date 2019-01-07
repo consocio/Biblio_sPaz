@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@android:color/black</color>
+    <color name="colorPrimaryDark">@android:color/black</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#fff</color>
+
+    <!-- Login -->
+    <color name="bg">#303030</color>
+    <color name="editTextbg">#55000000</color>
+    <color name="texthint">#e6e6e6</color>
+
+</resources>
