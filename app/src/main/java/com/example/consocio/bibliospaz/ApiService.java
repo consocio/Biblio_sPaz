@@ -19,8 +19,6 @@ public class ApiService {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         return retrofit.create(BibliospazApi.class);
-
-
     }
 
 }

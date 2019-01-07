@@ -1,5 +1,5 @@
 
-package com.example.consocio.bibliospaz.Utils;
+package com.example.consocio.bibliospaz.Models;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

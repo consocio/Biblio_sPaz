@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.consocio.bibliospaz.Utils.Login;
+import com.example.consocio.bibliospaz.Models.Login;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import retrofit2.Call;
@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     private String token;
     private static final BibliospazApi bibliospazApi = new ApiService().init();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Login();
+                MainActivity.this.login();
                 if (!(token == null)) {
                     startActivity(new Intent(MainActivity.this, Home.class));
                 } else {
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void Login() {
+    private void login() {
         String email;
         String pwd;
 
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Login loginResponse = response.body();
 
-                if (!(loginResponse.getSuccess() == "false")) {
+                if (!loginResponse.getSuccess() == false) {
                     String content = "";
                     content += "Code: " + response.code() + "\n";
                     content += "Access Token = " + loginResponse.getAccess_token() + "\n";
@@ -70,17 +69,12 @@ public class MainActivity extends AppCompatActivity {
                     content += "Name = " + loginResponse.getName() + "\n";
                     content += "Surname = " + loginResponse.getSurname() + "\n" + "\n";
 
-
-                    token += loginResponse.getAccess_token();
+                    token = loginResponse.getAccess_token();
                     Prefs.putString("token", token);
                     Log.d("prova", "prefs " + Prefs.getString("token", null));
-
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Credenziali errate", Toast.LENGTH_LONG).show();
                 }
-
-
             }
 
             @Override
