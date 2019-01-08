@@ -1,8 +1,11 @@
 package com.example.consocio.bibliospaz;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -31,6 +34,7 @@ public class Home extends AppCompatActivity
     private String token;
     private String name = "";
     private String email = "";
+    private RecyclerView rec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class Home extends AppCompatActivity
         setSupportActionBar(toolbar);
         userMail = findViewById(R.id.user_Mail);
         userName = findViewById(R.id.user_Name);
+        rec =findViewById(R.id.recycler_books);
         token = "Bearer ";
         token += Prefs.getString("token",null);
 
@@ -49,6 +54,9 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                BookFragment frag = new BookFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.layhome,  frag).commit();
             }
         });
 
@@ -63,6 +71,8 @@ public class Home extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         userMail = (TextView) header.findViewById(R.id.user_Mail);
         userName = (TextView) header.findViewById(R.id.user_Name);
+
+
 
         userInfo();
     }
@@ -93,11 +103,20 @@ public class Home extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        BookFragment bookfra;
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (id){
             case R.id.barcode_scan:
                 break;
             case R.id.elencoLibri:
+                android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                // Replace the contents of the container with the new fragment
+                ft.replace(R.id.conthome, new BookFragment());
+                // or ft.add(R.id.your_placeholder, new FooFragment());
+                // Complete the changes added above
+                ft.commit();
                 break;
+
             case R.id.addBook:
                 break;
             case R.id.settings:

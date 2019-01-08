@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/user"
-        android:text=""
+        android:text="buscainofra@gmail.com"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
@@ -28,7 +28,7 @@
 
     <EditText
         android:id="@+id/password"
-        android:text=""
+        android:text="dioporco"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
