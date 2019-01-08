@@ -3,12 +3,16 @@ package com.example.consocio.bibliospaz;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.consocio.bibliospaz.Adapter.RecycleAdapter;
 
@@ -29,7 +33,8 @@ public class BookFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private RecyclerView recyclerView;
-    private RecycleAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
     private ArrayList<BookItem> bookArr = new ArrayList<>();
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -73,17 +78,36 @@ public class BookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_book, container, false);
+        getActivity().setTitle("Elenco Libri");
         recyclerView = v.findViewById(R.id.recycler_books);
         recyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
+        bookArr.clear();
         bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
         bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
         bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
-        mAdapter = new RecycleAdapter(getContext(),bookArr);
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
+        bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
+        mAdapter = new RecycleAdapter(getContext(),bookArr);
         recyclerView.setAdapter(mAdapter);
+
+
+
         return v;
     }
 

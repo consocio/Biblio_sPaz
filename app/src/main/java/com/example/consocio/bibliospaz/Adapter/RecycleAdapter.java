@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.consocio.bibliospaz.BookItem;
 import com.example.consocio.bibliospaz.R;
@@ -16,58 +18,92 @@ import com.example.consocio.bibliospaz.R;
 import java.util.ArrayList;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
-    private ArrayList<BookItem> bookList;
-    private Context context;
-    public RecycleAdapter(Context context,ArrayList<BookItem> bookList) {
-        this.bookList = bookList;
+    private ArrayList<BookItem> mDataset;
 
+    private Context context;
+    private int position = 0;
+
+    public RecycleAdapter(Context context,ArrayList<BookItem> mDataset) {
+
+        this.mDataset = mDataset;
         this.context = context;
     }
 
-
-
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_books,viewGroup,false);
-        ViewHolder holder= new ViewHolder(v);
-        return holder;
+    public RecycleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_books, parent, false);
+        ViewHolder vh = new ViewHolder(v);
+
+        return vh;
+    }
+
+    public void remove(int position){
+        mDataset.remove(position);
+        notifyItemRemoved(position);
+
+
+
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.title.setText(bookList.get(i).getTitolo());
-        viewHolder.date.setText(bookList.get(i).getData());
-        viewHolder.author.setText(bookList.get(i).getAutore());
-        //viewHolder.preview.setImage(bookList.get(i).getUrlImg());
-        viewHolder.category.setText(bookList.get(i).getCategoria());
-
-        Log.i("title",bookList.get(0).getCategoria());
+    public void onBindViewHolder(final RecycleAdapter.ViewHolder holder, final int position) {
 
 
+
+        holder.titolo.setText(mDataset.get(position).getTitolo());
+        //holder.imgResource.setImageResource(mDataset.get(position).getImgUrl());
+        holder.data.setText(mDataset.get(position).getData());
+        holder.autore.setText(mDataset.get(position).getAutore());
+        holder.cat.setText(mDataset.get(position).getCategoria());
+        holder.rel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,position+"",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        this.position = position;
+
+    }
+
+
+    public int getPosition() {
+        return position;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mDataset.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title,author,date,category;
-        private ImageView preview;
+        private TextView titolo;
+        private TextView autore;
+        private ImageView img;
+        private TextView data;
+        private TextView cat;
+        private RelativeLayout rel;
 
-        public ViewHolder(View itemView){
-            super (itemView);
-            title=itemView.findViewById(R.id.book_title);
-            author = itemView.findViewById(R.id.book_author);
-            date = itemView.findViewById(R.id.book_published);
-            category = itemView.findViewById(R.id.book_published);
-            preview = itemView.findViewById(R.id.book_photo);
+
+        public ViewHolder(final View itemView) {
+            super(itemView);
+            titolo = (TextView) itemView.findViewById(R.id.book_title);
+            data = (TextView) itemView.findViewById(R.id.book_published);
+            img = (ImageView) itemView.findViewById(R.id.book_photo);
+            autore = itemView.findViewById(R.id.book_author);
+            cat =  itemView.findViewById(R.id.book_category);
+            rel = itemView.findViewById(R.id.rel);
+
+
+
+
+
 
 
 
         }
+
     }
 
 
