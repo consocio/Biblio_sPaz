@@ -15,8 +15,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.consocio.bibliospaz.Adapter.RecycleAdapter;
+import com.example.consocio.bibliospaz.Models.Login;
+import com.example.consocio.bibliospaz.Models.Responso;
+import com.google.gson.Gson;
+import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -36,6 +46,9 @@ public class BookFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<BookItem> bookArr = new ArrayList<>();
+    private static final BibliospazApi bibliospazApi = new ApiService().init();
+    private String token;
+    private String method = "application/json";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -70,6 +83,7 @@ public class BookFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -83,6 +97,7 @@ public class BookFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
+        getBooks();
         bookArr.clear();
         bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
         bookArr.add(new BookItem("jfjfd","fbcfdb","fbbgdbdb","xbfxfbx"));
@@ -133,5 +148,29 @@ public class BookFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void getBooks(){
+        Log.d("prova", "in getbooks");
+        token = "Bearer ";
+        token += Prefs.getString("token", null);
+
+        Log.d("prova",token);
+        Call<ResponseBody> call = bibliospazApi.getBookResponse(token,method);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Codice errore:" + response.code(), Toast.LENGTH_SHORT).show();
+                }
+                Log.d("prova", "response " + new Gson().toJson(response.body()) + " code " + response.code());
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
